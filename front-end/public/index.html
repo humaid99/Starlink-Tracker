@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta 
+			charset="utf-8" 
+			name="theme-color" 
+			content="#000000"
+			name="viewport"
+  			content="minimum-scale=1, initial-scale=1, width=device-width"
+			name="description"
+			content="Web site created using create-react-app"
+		/>
+
+		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+		
+		<!-- Fonts to support Material Design -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+		<!-- Icons to support Material Design -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+		
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		
+		
+		<title>Starlink Tracker</title>
+		
+	</head>
+
+	<body>
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		
+
+		<div id = "bodyDiv">
+			<div id="main">
+				<div id="primaryButtonDiv">
+					<button id="method1">Visualize Starlink in Space</button>
+					<button id="method2">Get Satellite Orbital Data</button>
+					<div id="material-buttons"></div>
+					<div id="dbButtonDiv">
+						<input type="text" placeholder="Username" id="username" maxlength="15">
+						<input type="password" placeholder="Password" id="password" maxlength="15">
+						<button id="method3">Log In</button>
+						<button id="method4">Sign Up</button>
+					</div>
+				</div>
+
+				<!-- <div id="textBoxDiv"></div> -->
+
+				<div id="mainDiv"></div>
+				
+				<div id="root"></div>
+
+				<div id="mapDiv">
+					<iframe
+						id="iframeMap"
+						frameBorder="0"
+						scrolling="no"
+						marginheight="0"
+						src="maps.html"
+					>
+					</iframe>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="tablesFunctions.js"></script>
+		<script type="text/javascript" src="tables.js"></script>
+	</body>
+</html>

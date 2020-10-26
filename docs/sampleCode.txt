@@ -1,0 +1,447 @@
+CREATE DATABASE starlinkTracker;
+
+\c starlinktracker
+
+CREATE TABLE satTable(id SERIAL PRIMARY KEY,satlatitude int,satlongitude int,azimuth int,elevation,ra int,dec int,timestamp int);
+
+/////// OLD CODE DUMP ///////
+
+// drop-down code
+    let groupSelectDropDownMain = document.createElement("div");
+    groupSelectDropDownMain.id = "groupSelectDropDown";
+    
+    let groupSelectDropDownLabel = document.createElement("label");
+    groupSelectDropDownLabel.textContent = "Launch Group: ";
+    
+    let groupSelectDropDownSelect = document.createElement("select");
+    groupSelectDropDownSelect.id = "launchGroupSelect";
+    groupSelectDropDownSelect.name = "Launch Group";
+    groupSelectDropDownSelect.options[groupSelectDropDownSelect.options.length] = new Option("Please select a launch date");
+    
+    for(index in launchList) {
+        groupSelectDropDownSelect.options[groupSelectDropDownSelect.options.length] = new Option(launchList[index], launchList[index]);
+    };
+    // drop-down code end
+
+    groupSelectDropDownMain.appendChild(groupSelectDropDownLabel);
+    groupSelectDropDownMain.appendChild(groupSelectDropDownSelect);
+    
+    mainDiv.appendChild(groupSelectDropDownMain);
+    
+    groupSelectDropDownSelect.addEventListener("change", function () {
+
+        // let groupSelectDropDownSelect = getElementById("groupSelectDropDownSelect");
+        // let satTable = getElementById("satTable");
+
+        
+        
+        let launchgroup = groupSelectDropDownSelect.value;
+        
+        // let satCountMsg = document.createElement("div")
+        // textBoxDiv.appendChild(satCountMsg);
+        // satCountMsg.id = "satCountMsg"
+        
+        fetch(
+            "/satdata/tle?" + new URLSearchParams({
+                    launchgroup: launchgroup
+                })
+        )
+            .then((response) => response.json())
+            .then((data) => {                
+                // console.log(data); // Outputs satJson to browser console
+                
+                if (data.sat) {
+                    let numSats = Object.keys(data.sat).length;
+                    
+                    for (var i = 0; i < numSats; i++) {
+                        
+                        // satCountMsg.textContent = '# of satellites tracked: ' + Object.keys(data.sat).length;
+
+                        satJson = data;
+
+                        while (mapDiv.childElementCount !== 0) {
+                            mapDiv.removeChild(mapDiv.lastChild);
+                        }
+                        let newFrame = document.createElement("iframe");
+                        newFrame.id = "iframeMap";
+                        newFrame.frameBorder="0";
+                        newFrame.scrolling="no";
+                        newFrame.marginheight="0";
+                        newFrame.marginwidth="0";
+                        // newFrame.onload="resizeIframe(this)"
+                        newFrame.src="maps.html";
+                
+                        mapDiv.appendChild(newFrame);
+                    }
+                
+                } else {
+                    textMsg.textContent = "Error!"
+                };
+            })
+
+/*
+// method2 event listener in vanilla JS : have to replace : 
+method2.addEventListener("click", function () {
+    
+    let userLong = 0;
+    let userLat = 0;
+    let userAlt = 0;
+    let orbitTime = 0;
+    loadJsonMain()
+    
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            userLat = position.coords.latitude;
+            userLong = position.coords.longitude;
+            // satCountMsg.innerHTML = "Latitude: " + userLat.toFixed(3) + "<br>Longitude: " + userLong.toFixed(3);
+        });
+    } else { 
+        textMsg.textContent = "Geolocation is not supported by this browser.";
+    }
+
+    // drop-down code
+    let groupSelectDropDownMain = document.createElement("div");
+    groupSelectDropDownMain.id = "groupSelectDropDown";
+    
+    let groupSelectDropDownLabel = document.createElement("label");
+    groupSelectDropDownLabel.textContent = "Launch Group: ";
+    
+    let groupSelectDropDownSelect = document.createElement("select");
+    groupSelectDropDownSelect.id = "launchGroupSelect";
+    groupSelectDropDownSelect.name = "Launch Group";
+    groupSelectDropDownSelect.options[groupSelectDropDownSelect.options.length] = new Option("Please select a launch date");
+    
+    for(index in launchList) {
+        groupSelectDropDownSelect.options[groupSelectDropDownSelect.options.length] = new Option(launchList[index], launchList[index]);
+    };
+    // drop-down code end
+
+    // let tleTrackButton = document.createElement("button");
+    // tleTrackButton.id = "tleTrackButton";
+    // tleTrackButton.textContent = "Track by launch group"
+    
+    let satTable = document.createElement("table");
+    satTable.id = "satTable";
+    // satTable.style.display = "none";
+
+    groupSelectDropDownMain.appendChild(groupSelectDropDownLabel);
+    groupSelectDropDownMain.appendChild(groupSelectDropDownSelect);
+
+    let toggleTableButton = document.createElement("button");
+    toggleTableButton.id = "toggleTableButton";
+    toggleTableButton.textContent = "Hide data table"
+    toggleTableButton.addEventListener("click", function () {
+        if (toggleTableButton.textContent == "Hide data table") {
+            satTable.style.display = "none";
+            toggleTableButton.textContent = "Show data table";
+        } else if (toggleTableButton.textContent == "Show data table") {
+            satTable.style.display = "block";
+            toggleTableButton.textContent = "Hide data table"
+        }
+    })
+
+    secondaryButtonDiv = document.createElement("div");
+    secondaryButtonDiv.id = "secondaryButtonDiv";
+    // secondaryButtonDiv.appendChild(tleTrackButton)
+    
+    mainDiv.appendChild(groupSelectDropDownMain);
+    mainDiv.appendChild(secondaryButtonDiv);
+    mainDiv.appendChild(satTable);
+
+    groupSelectDropDownSelect.addEventListener("change", function () {
+
+        while (textBoxDiv.childElementCount !== 0) {
+            textBoxDiv.removeChild(textBoxDiv.lastChild);
+        }
+
+        let launchgroup = groupSelectDropDownSelect.value;
+        while((satTable).childElementCount !== 0){
+            satTable.removeChild(satTable.lastChild);
+        }
+    
+        fetch(
+            "/satdata/tle?" + new URLSearchParams({
+                    launchgroup: launchgroup,
+                    userLat : userLat,
+                    userLong : userLong,
+                    userAlt : userAlt
+                })
+        )
+            .then((response) => response.json())
+            .then((data) => {                
+                console.log(data); // Outputs satJson to browser console
+
+                if (data.sat) {
+
+                    secondaryButtonDiv.appendChild(toggleTableButton);
+
+                    let numSats = Object.keys(data.sat).length;
+                    let headerRow = document.createElement("tr");
+                    let first = document.createElement("th");
+                    let second = document.createElement("th");
+                    let third = document.createElement("th");
+                    let fourth = document.createElement("th");
+                    let fifth = document.createElement("th");
+                    let sixth = document.createElement("th");
+                    let seventh = document.createElement("th");
+                    let eigth = document.createElement("th");
+                    let ninth = document.createElement("th");
+    
+                    first.textContent = "NORAD Id";
+                    second.textContent = "Sat Name";
+                    third.textContent = "Postion (x)";
+                    fourth.textContent = "Postion (y)";
+                    fifth.textContent = "Postion (z)";
+                    sixth.textContent = "Velocity (x)";
+                    seventh.textContent = "Velocity (y)";
+                    eigth.textContent = "Velocity (z)";
+                    ninth.textContent = "Orbit tracking"
+    
+                    headerRow.append(first, second, third, fourth, fifth, sixth, seventh, eigth, ninth);
+                    satTable.append(headerRow);
+    
+                    for (var i = 0; i < numSats; i++) {
+                        let row = document.createElement("tr");
+                        let noradIdCell = document.createElement("td");
+                        let satNameCell = document.createElement("td");
+                        let positionXCell = document.createElement("td");
+                        let positionYCell = document.createElement("td");
+                        let positionZCell = document.createElement("td");
+                        let velocityXCell = document.createElement("td");
+                        let velocityYCell = document.createElement("td");
+                        let velocityZCell = document.createElement("td");
+                        let orbitTrackCell = document.createElement("td");
+    
+                        noradIdCell.textContent = data.sat[i].id;
+                        row.id = data.sat[i].id;
+                        satNameCell.textContent = data.sat[i].satName;
+                        positionXCell.textContent = data.sat[i].tableData.position.x.toFixed(3);
+                        positionYCell.textContent = data.sat[i].tableData.position.y.toFixed(3);
+                        positionZCell.textContent = data.sat[i].tableData.position.z.toFixed(3);
+                        velocityXCell.textContent = data.sat[i].tableData.velocity.x.toFixed(3);
+                        velocityYCell.textContent = data.sat[i].tableData.velocity.y.toFixed(3);
+                        velocityZCell.textContent = data.sat[i].tableData.velocity.z.toFixed(3);
+
+                        let orbitTrackButton = document.createElement("button");
+                        orbitTrackButton.id = "orbitTrackButton";
+                        orbitTrackButton.textContent = "Track Satellite Orbit"
+                        orbitTrackButton.addEventListener("click", function() {
+                            orbitTrackButtonFunc(noradIdCell.textContent, userLat, userLong, userAlt, parseInt(orbitTrackRangeValueChanger()));
+                        })
+                        
+                        let orbitTrackCellDiv = document.createElement("span");
+                        orbitTrackCell.id = "orbitTrackRangeDiv";
+                        
+                        let orbitTrackRange = document.createElement("input");
+                        orbitTrackRange.id = "orbitTrackRange";
+                        orbitTrackRange.min = "1";
+                        orbitTrackRange.max = "300";
+                        orbitTrackRange.placeholder = "1-300 (def: 1)"
+                        orbitTrackRange.maxlength = "4"
+
+                        orbitTrackCellDiv.appendChild(orbitTrackRange);
+
+                        orbitTrackCell.id = "orbitTrackCell";
+                        orbitTrackCell.appendChild(orbitTrackCellDiv);
+                        orbitTrackCell.appendChild(orbitTrackButton);
+
+                        row.append(noradIdCell, satNameCell, positionXCell, positionYCell, positionZCell, velocityXCell, velocityYCell, velocityZCell, orbitTrackCell);
+                        satTable.append(row);
+                        // textMsg.textContent = data.sat[i].transactionCount; // uncomment line25 first
+                        satCountMsg.textContent = '# of satellites tracked: ' + Object.keys(data.sat).length;
+                    }
+                } else {
+                    while((satTable).childElementCount !== 0){
+                        satTable.removeChild(satTable.lastChild);
+                    }
+                    textMsg.textContent = "Error!"
+                };
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    })
+});
+*/
+
+function orbitTrackButtonFunc(noradId, lat, longt, altd, orbtTm) {
+    let satTable = document.getElementById("satTable");
+
+    // while (satTable.childElementCount !== 0) {
+    //     satTable.removeChild(satTable.lastChild);
+    // }
+    
+    fetch(
+        "/satdata/pos?" + new URLSearchParams({
+                noradId: noradId,
+                userLat : lat,
+                userLong : longt,
+                userAlt : altd,
+                orbitTime : orbtTm
+            })
+    )
+        .then((response) => response.json())
+        .then((data) => {
+            // console.log(data)
+
+            let spacerRow = document.createElement("tr");
+            spacerRow.id = `${noradId}1`;
+            let spacerRowTh = document.createElement("td");
+            spacerRowTh.id = "spacerRowTh";
+            spacerRowTh.style.columnSpan = "all";
+            spacerRowTh.style.textContent = "";
+            spacerRowTh.style.border = "none"
+            spacerRow.append(spacerRowTh);
+
+            let nextId = `${parseInt(noradId)+1}`;
+            satTable.insertBefore(
+                spacerRow.cloneNode(true), 
+                document.getElementById(nextId)
+            )
+
+            let titleRow = document.createElement("tr");
+            let titleRowTh = document.createElement("td");
+            let placeholderCellTh = document.createElement("td");
+
+            titleRow.id = `${noradId}2`;
+            titleRowTh.id = "titleRowTh";
+            
+            placeholderCellTh.id = "placeholderCellTh";
+            placeholderCellTh.textContent = "";
+            placeholderCellTh.style.border = "none"
+
+            titleRowTh.textContent = "Orbit Tracking"
+            titleRowTh.style.columnSpan = "5";
+            titleRowTh.style.border = "none";
+            
+            titleRow.append(placeholderCellTh.cloneNode(true), placeholderCellTh.cloneNode(true), placeholderCellTh.cloneNode(true), titleRowTh, placeholderCellTh.cloneNode(true));
+
+            satTable.insertBefore(
+                titleRow, 
+                document.getElementById(nextId)
+            )
+
+            let headerRow = document.createElement("tr");
+            headerRow.id = `${noradId}3`;
+            
+            let first = document.createElement("th");
+            let second = document.createElement("th");
+            let third = document.createElement("th");
+            let fourth = document.createElement("th");
+            let fifth = document.createElement("th");
+            let sixth = document.createElement("th");
+            
+            first.style.border = "1px dashed black";
+            second.style.border = "1px dashed black";
+            third.style.border = "1px dashed black";
+            fourth.style.border = "1px dashed black";
+            fifth.style.border = "1px dashed black";
+
+            first.textContent = "Time Stamp";
+            second.textContent = "Latitude";
+            third.textContent = "Longitude";
+            fourth.textContent = "Altitude";
+            fifth.textContent = "Elevation";
+            
+            let orbitTrackResetButton = document.createElement("button");
+            orbitTrackResetButton.id = "orbitTrackResetButton";
+            orbitTrackResetButton.style.margin = "0px";
+            orbitTrackResetButton.textContent = "Reset Orbit Tracker"
+            orbitTrackResetButton.addEventListener("click", function () {
+                for (let orbitRowResetCounter = 1; orbitRowResetCounter <= (parseInt(orbtTm) + 4); orbitRowResetCounter++) {
+                    satTable.removeChild(document.getElementById(`${noradId}${orbitRowResetCounter}`))
+                    // document.getElementById("orbitTrackRange").value = null;
+                }
+            })
+
+            sixth.id = "sixth";
+            sixth.style.border = "none";
+            sixth.append(orbitTrackResetButton);
+
+            headerRow.append(placeholderCellTh.cloneNode(true), placeholderCellTh.cloneNode(true), placeholderCellTh.cloneNode(true), first, second, third, fourth, fifth, sixth);
+
+            satTable.insertBefore(
+                headerRow, 
+                document.getElementById(nextId)
+            )
+
+            for (let orbitRowCounter = 0; orbitRowCounter < orbtTm; orbitRowCounter++) {
+                
+                let row = document.createElement("tr");
+
+                let orbitTrackIdCell = document.createElement("td");
+                let satNameCell = document.createElement("td");
+                let timeStampCell = document.createElement("td");
+                let satlatitude = document.createElement("td");
+                let satlongitude = document.createElement("td");
+                let sataltitude = document.createElement("td");
+                let azimuth = document.createElement("td");
+                let elevation = document.createElement("td");
+                let ra = document.createElement("td");
+                let dec = document.createElement("td");
+                let placeholderCell = document.createElement("td");
+                placeholderCell.style.border = "none"
+
+                timeStampCell.style.border = "1px dashed black";
+                satlatitude.style.border = "1px dashed black";
+                satlongitude.style.border = "1px dashed black";
+                sataltitude.style.border = "1px dashed black";
+                elevation.style.border = "1px dashed black";
+
+                let date = new Date(data[orbitRowCounter]["timestamp"] * 1000);
+                let hours = date.getHours();
+                let minutes = "0" + date.getMinutes();
+                let seconds = "0" + date.getSeconds();
+                let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+                
+                timeStampCell.textContent = formattedTime;
+                satlatitude.textContent = data[orbitRowCounter]["satlatitude"].toFixed(2);
+                satlongitude.textContent = data[orbitRowCounter]["satlongitude"].toFixed(2);
+                sataltitude.textContent = data[orbitRowCounter]["sataltitude"].toFixed(2);
+                elevation.textContent = data[orbitRowCounter]["elevation"].toFixed(2);
+
+                row.append(placeholderCell.cloneNode(true), placeholderCell.cloneNode(true), placeholderCell.cloneNode(true), timeStampCell, satlatitude, satlongitude, sataltitude, elevation, placeholderCell.cloneNode(true))
+                row.id = (`${data[orbitRowCounter]["orbitTrackId"]}${4 + orbitRowCounter}`);
+                
+                satTable.insertBefore(
+                    row, 
+                    document.getElementById(nextId)
+                )
+            }
+            spacerRow.id = `${noradId}${orbtTm + 4}`;
+            satTable.insertBefore(
+                spacerRow.cloneNode(true), 
+                document.getElementById(nextId)
+            )
+            document.getElementById("orbitTrackRange").value = null;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function orbitTrackRangeValueChanger() {
+    let orbitTrackRange = document.getElementById("orbitTrackRange");
+    if (!orbitTrackRange.value) {
+        return 1;
+    } else {
+        return orbitTrackRange.value;
+    }
+}
+
+// "2019.11.11" : [44713,44714,44715,44716,44717,44718,44719,44720,44721,44722,44723,44724,44725,44726,44727,44728,44729,44730,44731,44732,44733,44734,44735,44736,44737,44738,44739,44740,44741,44742,44743,44744,44745,44746,44747,44748,44749,44750,44751,44752,44753,44754,44755,44756,44757,44758,44759,44760,44761,44762,44763,44764,44765,44766,44767,44768,44769,44770,44771,44772],
+// "2019.05.24" : [44235,44237,44238,44239,44240,44241,44242,44243,44244,44245,44247,44248,44249,44250,44251,44252,44253,44254,44255,44256,44257,44258,44259,44260,44261,44262,44263,44264,44265,44266,44267,44268,44269,44270,44271,44272,44273,44274,44275,44276,44279,44280,44281,44282,44283,44284,44285,44286,44287,44288,44289,44290,44291,44292,44293,44294]
+
+
+{
+  "orbitTrackId": 44914,
+  "satName": "STARLINK-1073",
+  "timestamp": 1599177143,
+  "satlatitude": 42.42718469,
+  "satlongitude": 177.05372902,
+  "sataltitude": 553.06,
+  "azimuth": 3.24,
+  "elevation": -67.93,
+  "ra": 160.04401195,
+  "dec": 22.16416299
+}
