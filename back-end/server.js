@@ -242,36 +242,36 @@ app.get("/mapData/satrec", function(req, res) {
     res.send(trackResponse);
 });
 
-// Insert a user into the database
-app.get("/newUser", function(req, res){
-    let body = req.query;
-    if (
-        !body.hasOwnProperty("name") ||
-        !body.hasOwnProperty("pass")
-        ) {
-            return res.sendStatus(400);
-        }
-    else {
-        body.name = (body.name === "") ? null : body.name;
-        body.pass = (body.pass === "") ? null : body.pass;
-    }
-    // console.log(body);
-    // pool.query(
-    //     `INSERT INTO accounts(name, pass)
-    //     VALUES($1, $2)
-    //     RETURNING *`,
-    //     [body.name, body.pass]
-    // )
-    .then(function (response) {
-        // console.log("Inserted:");
-        // console.log(response.rows[0].name);
-        res.status(200).send({name : response.rows[0].name});
-    })
-    .catch(function (error) {
-        // console.log(error.code);
-        res.status(400).send({code : error.code});
-    });
-});
+// // Insert a user into the database
+// app.get("/newUser", function(req, res){
+//     let body = req.query;
+//     if (
+//         !body.hasOwnProperty("name") ||
+//         !body.hasOwnProperty("pass")
+//         ) {
+//             return res.sendStatus(400);
+//         }
+//     else {
+//         body.name = (body.name === "") ? null : body.name;
+//         body.pass = (body.pass === "") ? null : body.pass;
+//     }
+//     // console.log(body);
+//     // pool.query(
+//     //     `INSERT INTO accounts(name, pass)
+//     //     VALUES($1, $2)
+//     //     RETURNING *`,
+//     //     [body.name, body.pass]
+//     // )
+//     .then(function (response) {
+//         // console.log("Inserted:");
+//         // console.log(response.rows[0].name);
+//         res.status(200).send({name : response.rows[0].name});
+//     })
+//     .catch(function (error) {
+//         // console.log(error.code);
+//         res.status(400).send({code : error.code});
+//     });
+// });
 
 // Get a user from the database
 // app.get("/getUser", function(req, res){
