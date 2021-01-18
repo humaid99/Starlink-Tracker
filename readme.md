@@ -28,19 +28,6 @@ Clone repo into a local folder.
 In the working directory, run the following:
 cd ./back-end && npm install && cd ../front-end && npm install
 ```
-### Database setup
-
-```bash
-Install PostgreSQL, put your password into the env.json, then do the following:
-psql --username postgres
-
-CREATE DATABASE starlinktrack;
-\c starlinktracker;
-CREATE TABLE accounts (
-    name VARCHAR(15) UNIQUE NOT NULL,
-    pass VARCHAR(15) NOT NULL
-);
-```
 
 ### Run the Tracker
 
