@@ -17,8 +17,17 @@
 .env.development.local
 .env.test.local
 .env.production.local
-.code-workspace
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+starlink-tracker-react.code-workspace
+back-end/env.json
+back-end/package-lock.json
+back-end/package.json
+back-end/node_modules
+docs/sampleCode.txt
+docs/Starlink Tracker Submission.zip
+front-end/package-lock.json
+front-end/package.json
+front-end/node_modules
