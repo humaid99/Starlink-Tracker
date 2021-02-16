@@ -9,7 +9,7 @@ function loadJsonHelper(callback) {
           }
     };
     xobj.send(null);  
-};
+}
 
 function loadJsonMain() {
     loadJsonHelper(function(response) {
@@ -20,7 +20,7 @@ function loadJsonMain() {
             noradIdList[launchList[i]] = data[launchList[i]];
         }
     });
-};
+}
 
 function addDivEventListener(divId) {
     // console.log(divId) 
@@ -63,10 +63,10 @@ function addDivEventListener(divId) {
                 
                 } else {
                     console.log("Error!");
-                };
+                }
             })
     }
-};
+}
 
 function toggleSideBar() {
     if (document.getElementById("sideBarDiv").className !== document.getElementById("main").className) {
@@ -76,7 +76,7 @@ function toggleSideBar() {
         document.getElementById("main").classList.toggle('active');
         document.getElementById("sideBarDiv").classList.toggle('active');
     }
-};
+}
 
 function addSideBar() {
 
@@ -119,7 +119,7 @@ function addSideBar() {
         // console.log(noradIdList)
         // console.log("a bug says hello");
 
-        newLaunchGroupItemDropdown = document.createElement("ul");
+        let newLaunchGroupItemDropdown = document.createElement("ul");
         newLaunchGroupItemDropdown.id = `${launchList[launchGroupCount]}dropdown`
 
         
@@ -152,8 +152,8 @@ function addSideBar() {
     sideBarDiv.append(sideBarList);
     
     // sideBarDiv.append(sideBarToggleDiv, sideBarList);
-};
+}
 
 function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
-};
+}
