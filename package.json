@@ -4,13 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev-run": "concurrently \"npm run dev-server\" \"npm run client\"",
-    "project-install": "npm install && cd ./front-end && npm install",
-    "start": "npm run client",
-    "dev-server": "nodemon server.js",
-    "server": "node server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server.js",
+    "start": "node server.js",
     "client": "cd ./front-end && npm start",
-    "build": "npm install && cd ./front-end && npm install && npm run build"
+    "build": "npm install && cd ./front-end && npm install && npm run build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install --prefix front-end && npm run build --prefix front-end"
   },
   "author": "Humaid",
   "license": "MIT",
