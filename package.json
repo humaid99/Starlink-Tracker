@@ -6,10 +6,10 @@
   "scripts": {
     "dev-run": "concurrently \"npm run server\" \"npm run client\"",
     "project-install": "npm install && cd ./front-end && npm install",
-    "start": "node server.js",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon server.js",
     "client": "npm start --prefix ./front-end",
-    "build": "cd ./front-end && npm run build"
+    "build": "npm install && cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
