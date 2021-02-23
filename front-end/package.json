@@ -12,6 +12,7 @@
     "axios": "^0.20.0",
     "clsx": "^1.1.1",
     "fontsource-roboto": "^3.0.3",
+    "http-proxy-middleware": "^1.0.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.3"
@@ -38,6 +39,7 @@
     ]
   },
   "engines": {
-    "node": "14.x"
+    "node": "14.x",
+    "npm": "6.x"
   }
 }
