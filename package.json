@@ -8,8 +8,7 @@
     "server": "nodemon server.js",
     "start": "node server.js",
     "client": "cd ./front-end && npm start",
-    "build": "npm install && cd ./front-end && npm install && npm run build",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install --prefix front-end && npm run build --prefix front-end"
+    "build": "npm install && cd ./front-end && npm install && npm run build"
   },
   "author": "Humaid",
   "license": "MIT",
