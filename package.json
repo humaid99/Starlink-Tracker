@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server.js",
-    "start": "npm server && cd ./front-end && npm start",
     "client": "cd ./front-end && npm start",
     "build": "npm install && cd ./front-end && npm install && npm run build"
   },
