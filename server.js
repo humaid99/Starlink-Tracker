@@ -8,7 +8,7 @@ const satellite = require("satellite.js");
 const env = require("./env.json");
 const data = require("./front-end/public/data.json");
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5001
 const hostname = "localhost";
 const apiKey = env["api_key"];
 const baseUrl = env["base_api_url"];
@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 app.use(express.static("public_html"));
 
 app.listen(port, hostname, () => {
-    console.log(`Tracker active at: http://${hostname}:${port}\n`);
+    console.log(`Back-end active at: http://${hostname}:${port}\n`);
 });
 
 //route handler for resetting globalSatTrackCallCounter

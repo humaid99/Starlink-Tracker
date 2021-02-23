@@ -8,9 +8,9 @@
     "project-install": "npm install && cd ./front-end && npm install",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "dev-server": "nodemon server.js",
-    "server": "nodemon server.js",
-    "client": "npm start --prefix ./front-end",
-    "build": "npm install && cd front-end && npm install && npm run build"
+    "server": "node server.js",
+    "client": "cd ./front-end && npm start",
+    "build": "npm install && cd ./front-end && npm install && npm run build"
   },
   "author": "Humaid",
   "license": "MIT",
