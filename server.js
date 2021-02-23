@@ -6,7 +6,7 @@ const satellite = require("satellite.js");
 // const path = require("path");
 
 const env = require("./env.json");
-const data = require("../front-end/public/data.json");
+const data = require("./front-end/public/data.json");
 
 const port = 5000;
 const hostname = "localhost";
