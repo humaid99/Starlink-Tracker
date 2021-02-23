@@ -3,7 +3,7 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const satellite = require("satellite.js")
 // const pg = require("pg");
-// const path = require("path");
+const path = require("path");
 
 const env = require("./env.json")
 const data = require("./front-end/public/data.json")
