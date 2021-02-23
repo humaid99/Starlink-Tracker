@@ -9,7 +9,7 @@ const env = require("./env.json")
 const data = require("./front-end/public/data.json")
 
 const port = process.env.PORT || 5000
-const hostname = "localhost"
+const hostname = "0.0.0.0"
 const apiKey = env["api_key"]
 const baseUrl = env["base_api_url"]
 
@@ -34,6 +34,7 @@ app.use(express.static("public_html"))
 
 //production mode
 if (process.env.NODE_ENV === "production") {
+	console.log(path)
 	app.use(express.static(path.join(__dirname, "front-end/build")))
 }
 
