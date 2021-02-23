@@ -1,0 +1,182 @@
+body {
+    font-family: "Roboto";
+}
+#bodyDiv {
+    background: url("https://i.pinimg.com/originals/c2/bd/63/c2bd637e12918331fdca95759fe38cfe.gif") no-repeat center center;
+    background-size: cover;
+    background-blend-mode: lighten;
+    background-color: rgba(48, 48, 48, 1);
+    width: inherit;
+    height: 100vh;
+    position: relative;
+}
+div {
+    margin: 5px;
+}
+button {
+    /* margin: 20px 12px 20px 12px; */
+    display: "inline-block";
+    padding: 0.55em 1.2em;
+    border: 0.1em solid #FFFFFF;
+    /* margin: 0 0.3em 0.3em 0; */
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:450;
+    font-size: 100%;
+    text-align:center;
+    transition: all 0.2s;
+}
+button:hover {
+    color:#000000;
+    background-color:#ffffff57;
+}
+@media all and (max-width:30em){
+button{
+    display:block;
+    margin:0.4em auto;
+}}
+#method1 {
+    margin: 20px 20px 20px 50px;
+}
+#method2 {
+    margin: 20px 50px 20px 20px;
+}
+#method3 {
+    margin: 20px 5px 20px 12px;
+}
+#method4 {
+    margin: 20px 12px 20px 5px;
+}
+input {
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:500;
+    transition: all 0.2s;
+}
+#mapDiv {
+    overflow: hidden;
+}
+#mapDiv iframe{
+    /* position: relative; */
+    padding: 20px;
+    height: 85vh;
+    width: 100%;
+}
+#root {
+    display: none;
+    margin: 0px;
+}
+#orbitTrackCell {
+    padding: 4px;
+}
+#orbitTrackRange {
+    margin: 0px 5px 0px 5px;
+    width: 70px;
+}
+#orbitTrackRangeDiv {
+    display: inline;
+}
+#orbitTrackButton {
+    margin: 0px;
+}
+#placeholderCellTH {
+    border: none;
+}
+#root {
+    margin: 0px;
+}
+#dbButtonDiv{
+    margin-left: auto;
+}
+
+/*Sidebar CSS Implementation*/
+#primaryButtonDiv {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+#sideBarDiv * {
+    margin: 2px 0px;
+    padding: 0px;
+}
+#sideBarHeader {
+    padding: 10px 8px 10px 5px;
+}
+#sideBarDiv {
+    top: 0;
+    height: 100%;
+    position: fixed;
+    width: 200px;
+    left:-205px;
+    background: #151515;
+    transition: all 200ms linear;
+}
+#sideBarDiv.active {
+    left:-5px;
+}
+#sideBarToggleDiv {
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 6px;
+    background: rgb(240, 240, 240);
+    float: left;
+}
+#sideBarToggleDiv:hover {
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 5px rgba(21, 21, 21, .6);
+}
+#sideBarToggleSpan {
+    display: inline-block;
+    width: 18px;
+    height: 3px;
+    background: #151515;
+    margin: 1px;
+}
+/* div[id*="Div"] {
+    margin: 4px;
+} */
+#sideBarDiv ul {
+    height: 100%;
+    overflow-y: auto;
+}
+#sideBarDiv ul li {
+    color: rgba(250, 235, 215, 0.8);
+    list-style: none;
+    padding: 8px 15px;
+    border-left: 1px solid rgba(150, 150, 150, 0.2);
+    border-bottom: 1px solid rgba(150, 150, 150, 0.2);
+    /* border-top: 1px solid rgba(150, 150, 150, 0.2); */
+}
+#sideBarDiv ul li:hover {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(250, 235, 215, 0.2);
+}
+#sideBarDiv ul li:active {
+    background-color: rgba(250, 235, 215, 0.6);
+}
+ul[id*="dropdown"] {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 500ms ease;
+}
+ul[id*="dropdown"].active {
+    opacity: 1;
+    max-height: 590px;
+}
+#main {
+    /* margin-left: 50px; */
+    transition: all 200ms linear;
+}
+#main.active {
+    margin-left: 200px;
+}
