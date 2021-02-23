@@ -4,16 +4,13 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev-run": "concurrently \"npm run server\" \"npm run client\"",
+    "dev-run": "concurrently \"npm run dev-server\" \"npm run client\"",
     "project-install": "npm install && cd ./front-end && npm install",
     "start": "concurrently \"npm run server\" \"npm run client\"",
+    "dev-server": "nodemon server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix ./front-end",
     "build": "npm install && cd front-end && npm install && npm run build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitlab.cci.drexel.edu/mm4845/starlink-tracker.git"
   },
   "author": "Humaid",
   "license": "MIT",

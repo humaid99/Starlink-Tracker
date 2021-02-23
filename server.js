@@ -8,7 +8,7 @@ const satellite = require("satellite.js");
 const env = require("./env.json");
 const data = require("./front-end/public/data.json");
 
-const port = 5000
+const port = process.env.PORT || 5000
 const hostname = "localhost";
 const apiKey = env["api_key"];
 const baseUrl = env["base_api_url"];
