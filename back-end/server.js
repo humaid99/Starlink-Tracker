@@ -6,7 +6,7 @@ const satellite = require("satellite.js")
 const path = require("path");
 
 const env = require("./env.json")
-const data = require("./front-end/public/data.json")
+const data = require("../front-end/public/data.json")
 
 const port = process.env.PORT || 5000
 const hostname = "0.0.0.0"
@@ -94,8 +94,12 @@ app.get("/satdata/tle", function (req, res) {
 
 				// console.log(response);
 				let satName = response.data.info["satname"]
+				let satId = response.data.info["satid"]
 				let transactionCount = response.data.info["transactionscount"]
 				let tleArray = response.data.tle.split("\r\n")
+				if (tleArray.length == 1) {
+					console.log(satId)
+				}
 				let satRecord = satellite.twoline2satrec(
 					tleArray[0],
 					tleArray[1]
