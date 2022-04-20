@@ -27,13 +27,16 @@ Clone repo into a local folder.
 ### Install dependencies
 
 ```bash
-In the working directory, run the following:
+In the STARLINK-TRACKER directory, run the following:
 cd ./back-end && npm install && cd ../front-end && npm install
+
+\\then run:
+npm audit fix && cd ../back-end && npm audit fix
 ```
 
 ### Run the Tracker
 
 ```bash
-In the working directory, run the following:
+In the STARLINK-TRACKER directory, run the following:
 cd ./back-end && concurrently "npm run server" "npm run client"
 ```
