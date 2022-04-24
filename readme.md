@@ -30,7 +30,7 @@ Clone repo into a local folder.
 In the STARLINK-TRACKER directory, run the following:
 cd ./back-end && npm install && cd ../front-end && npm install
 
-then run:
+When the above command is done running, run the following:
 npm audit fix && cd ../back-end && npm audit fix
 ```
 
